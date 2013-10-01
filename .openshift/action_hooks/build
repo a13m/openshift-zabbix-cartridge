@@ -9,7 +9,7 @@ BUILDROOT=$( mktemp -d )
 pushd $BUILDROOT
 
 curl -L -o zabbix-${ZABBIX_VERSION}.tar.gz http://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/${ZABBIX_VERSION}/zabbix-${ZABBIX_VERSION}.tar.gz/download
-tar -C $BUILDROOT -xzf ${ZABBIX_VERSION}.tar.gz
+tar -C $BUILDROOT -xzf zabbix-${ZABBIX_VERSION}.tar.gz
 
 pushd zabbix-${ZABBIX_VERSION}
 ./configure --enable-server --enable-ipv6 --with-libcurl --with-postgresql --prefix $ZABBIX_DIR
