@@ -1,0 +1,22 @@
+Name: zabbix
+Cartridge-Short-Name: zabbix
+Display-Name: Zabbix
+Version: "2.0.8"
+Website: https://github.com/a13m/openshift-zabbix-cartridge
+Cartridge-Version: 0.0.1
+Cartridge-Vendor: a13m
+Categories:
+  - service
+  - web_framework
+Provides:
+  - zabbix
+Scaling:
+  Min: 1
+  Max: 1
+Configure-Order:
+  - postgresql
+  - zabbix
+Subscribes:
+  set-db-connection-info:
+    Type: NET_TCP:db:connection-info
+    Required: true

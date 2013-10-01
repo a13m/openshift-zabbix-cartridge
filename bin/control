@@ -1,0 +1,78 @@
+#!/bin/bash
+
+pid=pid/zabbix.pid
+name="zabbix"
+
+function status() {
+    client_result $pwd
+    if [ -f $pid ] && ( kill -0 $(cat $pid) ); then
+        client_result "$name is running"
+    fi
+}
+
+function update() {
+    # placeholder
+}
+
+function start() {
+    if ! [ -f $pid ]; then
+        $OPENSHIFT_ZABBIX_DIR/bin/zabbix_server
+        ret=$?
+        if [ $ret -ne 0 ]; then
+            echo "$name failed to start - $ret" 1>&2
+            return $ret
+        fi
+    fi
+}
+
+function stop() {
+    cat $pid | xargs kill
+    return 0
+}
+
+function restart() {
+    stop; start
+}
+
+function build() {
+    echo
+}
+
+function post-deploy() {
+    echo
+}
+
+function pre-build() {
+    echo
+}
+
+function tidy() {
+    echo
+}
+
+#
+#  main():
+#
+
+# Ensure arguments.
+if ! [ $# -gt 0 ]; then
+    echo "Usage: $0 [start|restart|graceful|graceful-stop|stop|status|update|use-source]"
+    exit 1
+fi
+
+# Source utility functions.
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+# Handle commands.
+case "$1" in
+    start)               start       ;;
+    restart|graceful)    restart     ;;
+    graceful-stop|stop)  stop        ;;
+    status)              status      ;;
+    build)               build       ;;
+    pre-build)           pre-build   ;;
+    post-deploy)         post-deploy ;;
+    tidy)                tidy        ;;
+    update)              update      ;;
+    *)
+esac

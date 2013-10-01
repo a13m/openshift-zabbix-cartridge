@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+cat <<EOF >$OPENSHIFT_ZABBIX_DIR/etc/zabbix_server.conf
+LogFile=$OPENSHIFT_ZABBIX_DIR/logs/zabbix_server.log
+AlertScriptsPath=$OPENSHIFT_ZABBIX_DIR/share/zabbix/alertscripts/
+ExternalScripts=$OPENSHIFT_ZABBIX_DIR/share/zabbix/externalscripts/
+DBName=zabbix
+DBHost=$OPENSHIFT_POSTGRESQL_HOST
+DBUser=$OPENSHIFT_POSTGRESQL_USER
+DBPassword=$OPENSHIFT_POSTGRESQL_PASSWORD
+DBPort=$OPENSHIFT_POSTGRESQL_PORT
+EOF
+
