@@ -13,9 +13,6 @@ Provides:
 Scaling:
   Min: 1
   Max: 1
-Configure-Order:
-  - postgresql
-  - zabbix
 Subscribes:
   set-db-connection-info:
     Type: NET_TCP:db:connection-info
