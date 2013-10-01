@@ -16,7 +16,7 @@ function update() {
 
 function start() {
     if ! [ -f $pid ]; then
-        nohup $OPENSHIFT_ZABBIX_DIR/sbin/zabbix_server
+        nohup $OPENSHIFT_ZABBIX_DIR/sbin/zabbix_server -c $OPENSHIFT_ZABBIX_DIR/etc/zabbix_server.conf
         ret=$?
         if [ $ret -ne 0 ]; then
             echo "$name failed to start - $ret" 1>&2
