@@ -15,10 +15,10 @@ fi
 
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
-HTTPD_CFG_FILE=$OPENSHIFT_PHP_DIR/configuration/etc/conf/httpd_nolog.conf
-HTTPD_CFG_DIR=$OPENSHIFT_PHP_DIR/configuration/etc/conf.d
+HTTPD_CFG_FILE=$OPENSHIFT_ZABBIX_DIR/configuration/etc/conf/httpd_nolog.conf
+HTTPD_CFG_DIR=$OPENSHIFT_ZABBIX_DIR/configuration/etc/conf.d
 HTTPD_PASSENV_FILE=$HTTPD_CFG_DIR/passenv.conf
-HTTPD_PID_FILE=$OPENSHIFT_PHP_DIR/run/httpd.pid
+HTTPD_PID_FILE=$OPENSHIFT_ZABBIX_DIR/run/httpd.pid
 
 function start_zabbix() {
     if ! [ -f $ZABBIX_PID_FILE ]; then
@@ -73,7 +73,7 @@ function status() {
    if [ -f $ZABBIX_PID_FILE ] && ( kill -0 $(cat $ZABBIX_PID_FILE) ); then
        client_result "$name is running"
    fi
-   if output=$(curl http://$OPENSHIFT_PHP_IP:$OPENSHIFT_PHP_PORT/server-status?auto 2>&1 )
+   if output=$(curl http://$OPENSHIFT_ZABBIX_IP:$OPENSHIFT_ZABBIX_PORT/server-status?auto 2>&1 )
    then
       client_result "Application is running"
       client_result $output
@@ -87,9 +87,9 @@ function status() {
 }
 
 function tidy() {
-    client_message "Emptying log dir: $OPENSHIFT_PHP_LOG_DIR"
+    client_message "Emptying log dir: $OPENSHIFT_ZABBIX_LOG_DIR"
     shopt -s dotglob
-    rm -rf $OPENSHIFT_PHP_LOG_DIR/*
+    rm -rf $OPENSHIFT_ZABBIX_LOG_DIR/*
     return 0
 }
 
@@ -98,8 +98,8 @@ function build() {
     if [ -f "${OPENSHIFT_REPO_DIR}/.openshift/markers/force_clean_build" ]
     then
         echo ".openshift/markers/force_clean_build found!  Recreating pear libs" 1>&2
-        rm -rf "${OPENSHIFT_PHP_DIR}"/phplib/pear/*
-        mkdir -p "${OPENSHIFT_PHP_DIR}"/phplib/pear/{docs,ext,php,cache,cfg,data,download,temp,tests,www}
+        rm -rf "${OPENSHIFT_ZABBIX_DIR}"/phplib/pear/*
+        mkdir -p "${OPENSHIFT_ZABBIX_DIR}"/phplib/pear/{docs,ext,php,cache,cfg,data,download,temp,tests,www}
     fi
 
     if [ -f ${OPENSHIFT_REPO_DIR}deplist.txt ]
@@ -111,14 +111,14 @@ function build() {
             if pear list "$f" > /dev/null
             then
                 pear upgrade "$f"
-            elif ! ( php -c "${OPENSHIFT_PHP_DIR}"/conf -m | grep -i -q \^`basename "$f"`\$ )
+            elif ! ( php -c "${OPENSHIFT_ZABBIX_DIR}"/conf -m | grep -i -q \^`basename "$f"`\$ )
             then
                 pear install --alldeps "$f"
             else
                 echo "Extension already installed in the system: $f"
             fi
             # Remove gear-specific absolute paths from the generated PEAR files
-            find ${OPENSHIFT_PHP_DIR}phplib/pear/pear/ -type f ! -name '.*' -exec sed -i "s|${OPENSHIFT_HOMEDIR}|~/|g" {} \;
+            find ${OPENSHIFT_ZABBIX_DIR}phplib/pear/pear/ -type f ! -name '.*' -exec sed -i "s|${OPENSHIFT_HOMEDIR}|~/|g" {} \;
         done
     fi
     return 0
