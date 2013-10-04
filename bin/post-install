@@ -1,14 +1,24 @@
 #!/bin/sh
 
+# Taken from rhcsh
+mysql () 
+{ 
+    [ -n "$OPENSHIFT_MYSQL_DB_HOST" ] && hostopt="-h $OPENSHIFT_MYSQL_DB_HOST";
+    portopt="-P ${OPENSHIFT_MYSQL_DB_PORT:-3306}";
+    useropt="-u ${OPENSHIFT_MYSQL_DB_USERNAME:-'admin'}";
+    passopt=--password="$OPENSHIFT_MYSQL_DB_PASSWORD";
+    /usr/bin/mysql ${hostopt} ${portopt} ${useropt} ${passopt} "$@"
+}
+
 cat <<EOF >>$OPENSHIFT_ZABBIX_DIR/etc/zabbix_server.conf
-DBName=zabbix
+DBName=${OPENSHIFT_APP_NAME}
 DBHost=${OPENSHIFT_MYSQL_DB_HOST:-127.0.0.1}
-DBUser=${OPENSHIFT_MYSQL_DB_USER:-admin}
+DBUser=${OPENSHIFT_MYSQL_DB_USERNAME:-admin}
 DBPassword=${OPENSHIFT_MYSQL_DB_PASSWORD:-admin}
 DBPort=${OPENSHIFT_MYSQL_DB_PORT:-3306}
 EOF
 
-cat <<EOF >$OPENSHIFT_ZABBI_DIR/php/conf/zabbix.conf.php
+cat <<EOF >$OPENSHIFT_ZABBIX_DIR/php/conf/zabbix.conf.php
 <?php
 // Zabbix GUI configuration file
 global \$DB;
@@ -17,7 +27,7 @@ global \$DB;
 \$DB["SERVER"]		= '${OPENSHIFT_MYSQL_DB_HOST}';
 \$DB["PORT"]		= '${OPENSHIFT_MYSQL_DB_PORT}';
 \$DB["DATABASE"]	= '${OPENSHIFT_APP_NAME}';
-\$DB["USER"]		= '${OPENSHIFT_MYSQL_DB_USER}';
+\$DB["USER"]		= '${OPENSHIFT_MYSQL_DB_USERNAME}';
 \$DB["PASSWORD"]	= '${OPENSHIFT_MYSQL_DB_PASSWORD}';
 // SCHEMA is relevant only for IBM_DB2 database
 \$DB["SCHEMA"]		= '';
@@ -30,6 +40,6 @@ global \$DB;
 ?>
 EOF
 
-mysql zabbix < $OPENSHIFT_ZABBIX_DIR/mysql/schema.sql
-mysql zabbix < $OPENSHIFT_ZABBIX_DIR/mysql/images.sql
-mysql zabbix < $OPENSHIFT_ZABBIX_DIR/mysql/data.sql
+mysql ${OPENSHIFT_APP_NAME} < $OPENSHIFT_ZABBIX_DIR/mysql/schema.sql
+mysql ${OPENSHIFT_APP_NAME} < $OPENSHIFT_ZABBIX_DIR/mysql/images.sql
+mysql ${OPENSHIFT_APP_NAME} < $OPENSHIFT_ZABBIX_DIR/mysql/data.sql
