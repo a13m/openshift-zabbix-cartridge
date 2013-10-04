@@ -10,7 +10,6 @@ echo "$OPENSHIFT_ZABBIX_DIR/configuration/etc/php.ini" > "$OPENSHIFT_ZABBIX_DIR/
 
 rm -f $OPENSHIFT_ZABBIX_DIR/modules $OPENSHIFT_ZABBIX_DIR/conf/magic
 ln -s /usr/lib64/httpd/modules $OPENSHIFT_ZABBIX_DIR/modules
-mkdir $OPENSHIFT_ZABBIX_DIR/conf
 ln -s /etc/httpd/conf/magic $OPENSHIFT_ZABBIX_DIR/conf/magic
 
 # Create a writable directory for Drush settings
