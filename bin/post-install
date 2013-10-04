@@ -8,6 +8,28 @@ DBPassword=${OPENSHIFT_MYSQL_DB_PASSWORD:-admin}
 DBPort=${OPENSHIFT_MYSQL_DB_PORT:-3306}
 EOF
 
+cat <<EOF >$OPENSHIFT_ZABBI_DIR/php/conf/zabbix.conf.php
+<?php
+// Zabbix GUI configuration file
+global \$DB;
+
+\$DB["TYPE"]		= 'MYSQL';
+\$DB["SERVER"]		= '${OPENSHIFT_MYSQL_DB_HOST}';
+\$DB["PORT"]		= '${OPENSHIFT_MYSQL_DB_PORT}';
+\$DB["DATABASE"]	= '${OPENSHIFT_APP_NAME}';
+\$DB["USER"]		= '${OPENSHIFT_MYSQL_DB_USER}';
+\$DB["PASSWORD"]	= '${OPENSHIFT_MYSQL_DB_PASSWORD}';
+// SCHEMA is relevant only for IBM_DB2 database
+\$DB["SCHEMA"]		= '';
+
+\$ZBX_SERVER		= '${OPENSHIFT_ZABBIX_IP}';
+\$ZBX_SERVER_PORT	= '16016';
+\$ZBX_SERVER_NAME	= '';
+
+\$IMAGE_FORMAT_DEFAULT	= IMAGE_FORMAT_PNG;
+?>
+EOF
+
 mysql zabbix < $OPENSHIFT_ZABBIX_DIR/mysql/schema.sql
 mysql zabbix < $OPENSHIFT_ZABBIX_DIR/mysql/images.sql
 mysql zabbix < $OPENSHIFT_ZABBIX_DIR/mysql/data.sql
