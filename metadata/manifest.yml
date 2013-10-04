@@ -13,7 +13,29 @@ Provides:
 Scaling:
   Min: 1
   Max: 1
+Publishes:
+  get-php-ini:
+    Type: FILESYSTEM:php-ini
+  publish-http-url:
+    Type: NET_TCP:httpd-proxy-info
+  publish-gear-endpoint:
+    Type: NET_TCP:gear-endpoint-info
 Subscribes:
   set-db-connection-info:
     Type: NET_TCP:db:connection-info
     Required: true
+Endpoints:
+- Private-IP-Name: IP
+  Private-Port-Name: PORT
+  Private-Port: 8080
+  Public-Port-Name: PROXY_PORT
+  Protocols: [http, ws]
+  Mappings:
+  - Frontend: ''
+    Backend: ''
+    Options:
+      websocket: true
+  - Frontend: /health
+    Backend: ''
+    Options:
+      health: true
