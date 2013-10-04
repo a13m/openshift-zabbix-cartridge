@@ -1,0 +1,13 @@
+#!/bin/sh
+
+cat <<EOF >>$OPENSHIFT_ZABBIX_DIR/etc/zabbix_server.conf
+DBName=zabbix
+DBHost=${OPENSHIFT_MYSQL_DB_HOST:-127.0.0.1}
+DBUser=${OPENSHIFT_MYSQL_DB_USER:-admin}
+DBPassword=${OPENSHIFT_MYSQL_DB_PASSWORD:-admin}
+DBPort=${OPENSHIFT_MYSQL_DB_PORT:-3306}
+EOF
+
+mysql zabbix < $OPENSHIFT_ZABBIX_DIR/mysql/schema.sql
+mysql zabbix < $OPENSHIFT_ZABBIX_DIR/mysql/images.sql
+mysql zabbix < $OPENSHIFT_ZABBIX_DIR/mysql/data.sql
