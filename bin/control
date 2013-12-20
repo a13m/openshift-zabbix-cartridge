@@ -72,8 +72,8 @@ function restart() {
 }
 
 function do_stop() {
-  apache stop
-  stop_zabbix
+  apache stop || true
+  stop_zabbix || true
 }
 
 function configtest() {
