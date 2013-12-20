@@ -21,6 +21,10 @@ HTTPD_PASSENV_FILE=$HTTPD_CFG_DIR/passenv.conf
 HTTPD_PID_FILE=$OPENSHIFT_ZABBIX_DIR/run/httpd.pid
 
 function start_zabbix() {
+    if ! [ -f $OPENSHIFT_ZABBIX_DIR/etc/.configured ]; then
+      return 0
+    fi
+
     if ! [ -f $ZABBIX_PID_FILE ]; then
         nohup $OPENSHIFT_ZABBIX_DIR/sbin/zabbix_server -c $OPENSHIFT_ZABBIX_DIR/etc/zabbix_server.conf
         ret=$?

@@ -43,3 +43,6 @@ EOF
 mysql ${OPENSHIFT_APP_NAME} < $OPENSHIFT_ZABBIX_DIR/mysql/schema.sql
 mysql ${OPENSHIFT_APP_NAME} < $OPENSHIFT_ZABBIX_DIR/mysql/images.sql
 mysql ${OPENSHIFT_APP_NAME} < $OPENSHIFT_ZABBIX_DIR/mysql/data.sql
+
+touch $OPENSHIFT_ZABBIX_DIR/etc/.configured
+$OPENSHIFT_ZABBIX_DIR/bin/control start
