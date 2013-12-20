@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-ZABBIX_PID_FILE=$OPENSHIFT_ZABBIX_DIR/pid/zabbix.pid
+ZABBIX_PID_FILE=$OPENSHIFT_ZABBIX_DIR/run/zabbix.pid
 name="zabbix"
 
 #
@@ -32,6 +32,14 @@ function start_zabbix() {
     fi
 }
 
+function stop_zabbix() {
+  if [ -f $ZABBIX_PID_FILE ]; then
+	  zpid=$( cat ZABBIX_PID_FILE )
+	  wait_for_stop $zpid
+	  kill $zpid
+  fi
+}
+
 function apache() {
     [ "$1" != "stop" ] && write_httpd_passenv $HTTPD_PASSENV_FILE
     ensure_valid_httpd_process "$HTTPD_PID_FILE" "$HTTPD_CFG_FILE"
@@ -42,25 +50,30 @@ function apache() {
         test -f "$HTTPD_PID_FILE" && break;
         sleep 1;
       done
+    elif [ "$1" == "stop" ]; then
+      if [ -f "$HTTPD_PID_FILE" ]; then
+        httpd_pid=`cat "$HTTPD_PID_FILE" 2> /dev/null`
+        wait_for_stop $httpd_pid
+	echo "$httpd_pid" | xargs kill
+      fi
     fi
     return $ret
 }
 
-function restart() {
-    write_httpd_passenv $HTTPD_PASSENV_FILE
-    ensure_httpd_restart_succeed "$HTTPD_PID_FILE" "$HTTPD_CFG_FILE"
-    /usr/sbin/httpd -C "Include $HTTPD_CFG_DIR/*.conf" -f $HTTPD_CFG_FILE -k restart
-    return $?
+function do_start() {
+  start_zabbix
+  apache start
 }
 
-function stop() {
-    ensure_valid_httpd_process "$HTTPD_PID_FILE" "$HTTPD_CFG_FILE"
-    if [ -f "$HTTPD_PID_FILE" ]; then
-        httpd_pid=`cat "$HTTPD_PID_FILE" 2> /dev/null`
-    fi
-    /usr/sbin/httpd -C "Include $HTTPD_CFG_DIR/*.conf" -f $HTTPD_CFG_FILE -k stop
-    wait_for_stop $httpd_pid
-    cat $ZABBIX_PID_FILE | xargs kill
+function restart() {
+  do_stop
+  do_start
+  return $?
+}
+
+function do_stop() {
+  apache stop
+  stop_zabbix
 }
 
 function configtest() {
@@ -125,7 +138,7 @@ function build() {
 }
 
 case "$1" in
-  start)           echo "Starting PHP cartridge";   apache start ;;
+  start)           echo "Starting PHP cartridge";   start ;;
   stop)            echo "Stopping PHP cartridge";   stop ;;
   restart)         echo "Restarting PHP cartridge"; restart ;;
   reload|graceful) echo "Reloading PHP cartridge";  apache graceful ;;
