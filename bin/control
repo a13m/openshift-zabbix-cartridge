@@ -138,8 +138,8 @@ function build() {
 }
 
 case "$1" in
-  start)           echo "Starting PHP cartridge";   start ;;
-  stop)            echo "Stopping PHP cartridge";   stop ;;
+  start)           echo "Starting PHP cartridge";   do_start ;;
+  stop)            echo "Stopping PHP cartridge";   do_stop ;;
   restart)         echo "Restarting PHP cartridge"; restart ;;
   reload|graceful) echo "Reloading PHP cartridge";  apache graceful ;;
   status)          status ;;
