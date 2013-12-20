@@ -41,6 +41,6 @@ Endpoints:
       health: true
 - Private-IP-Name: IP
   Private-Port-Name: SERVER_PORT
-  Private-Port: 16016
+  Private-Port: 10051
   Public-Port-Name: SERVER_PROXY_PORT
 
