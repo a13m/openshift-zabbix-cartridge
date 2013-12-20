@@ -28,4 +28,6 @@ cat <<EOF >$OPENSHIFT_ZABBIX_DIR/etc/zabbix_server.conf
 LogFile=$OPENSHIFT_ZABBIX_DIR/logs/zabbix_server.log
 AlertScriptsPath=$OPENSHIFT_ZABBIX_DIR/share/zabbix/alertscripts/
 ExternalScripts=$OPENSHIFT_ZABBIX_DIR/share/zabbix/externalscripts/
+ListenPort=$OPENSHIFT_ZABBIX_SERVER_PORT
+ListenIP=$OPENSHIFT_ZABBIX_IP
 EOF
