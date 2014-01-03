@@ -12,7 +12,7 @@ Provides:
   - zabbix
 Scaling:
   Min: 1
-  Max: 1
+  Max: 2
 Publishes:
   get-php-ini:
     Type: FILESYSTEM:php-ini
