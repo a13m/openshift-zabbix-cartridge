@@ -21,8 +21,11 @@ Publishes:
   publish-gear-endpoint:
     Type: NET_TCP:gear-endpoint-info
 Subscribes:
-  set-db-connection-info:
-    Type: NET_TCP:db:connection-info
+  set-env:
+    Type: ENV:*
+    Required: false
+  set-mysql-connection-info:
+    Type: NET_TCP:db:mysql
     Required: true
 Endpoints:
 - Private-IP-Name: IP
