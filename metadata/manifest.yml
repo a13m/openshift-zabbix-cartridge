@@ -1,5 +1,5 @@
 Name: zabbix
-Cartridge-Short-Name: zabbix
+Cartridge-Short-Name: ZABBIX
 Display-Name: Zabbix
 Version: "2.0.8"
 Website: https://github.com/a13m/openshift-zabbix-cartridge
