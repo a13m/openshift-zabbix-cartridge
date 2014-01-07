@@ -8,6 +8,7 @@ Cartridge-Vendor: a13m
 Categories:
   - service
   - web_framework
+  - domain_scope
 Provides:
   - zabbix
 Scaling:
