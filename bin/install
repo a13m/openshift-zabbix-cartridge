@@ -37,5 +37,3 @@ ListenPort=$OPENSHIFT_ZABBIX_SERVER_PORT
 ListenIP=$OPENSHIFT_ZABBIX_IP
 EOF
 
-add_domain_env_var "ZABBIX_SERVER_IP=$( facter -p ipaddress )"
-add_domain_env_var "ZABBIX_SERVER_PORT=$OPENSHIFT_ZABBIX_SERVER_PROXY_PORT"
