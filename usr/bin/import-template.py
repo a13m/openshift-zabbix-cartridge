@@ -15,8 +15,8 @@ from pprint import pprint
 
 class ZabbixAPI(object):
   def __init__(self, host, port, user="admin", passwd="zabbix"):
-    self.user = user
-    self.passwd = passwd
+    self.user = os.environ.get('OPENSHIFT_ZABBIX_USER', user)
+    self.passwd = os.environ.get('OPENSHIFT_ZABBIX_PASSWORD', passwd)
     self.url = "http://%s:%s/api_jsonrpc.php" % (host, port)
 
   def zbxAuth(self):

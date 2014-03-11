@@ -44,6 +44,9 @@ mysql ${OPENSHIFT_APP_NAME} < $OPENSHIFT_ZABBIX_DIR/mysql/schema.sql
 mysql ${OPENSHIFT_APP_NAME} < $OPENSHIFT_ZABBIX_DIR/mysql/images.sql
 mysql ${OPENSHIFT_APP_NAME} < $OPENSHIFT_ZABBIX_DIR/mysql/data.sql
 
+# Set randomized password
+echo "update ${OPENSHIFT_APP_NAME}.users set passwd=md5('$OPENSHIFT_ZABBIX_PASSWORD') where alias='Admin'" | mysql
+
 touch $OPENSHIFT_ZABBIX_DIR/etc/.configured
 $OPENSHIFT_ZABBIX_DIR/bin/control start
 

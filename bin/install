@@ -7,6 +7,15 @@ case "$1" in
     version="$2"
 esac
 
+# Generate password and create env var
+echo 'Generating password'
+
+username="admin"
+password=$(generate_password)
+
+echo "$username" > $OPENSHIFT_MARIADB_DIR/env/OPENSHIFT_ZABBIX_USERNAME
+echo "$password" > $OPENSHIFT_MARIADB_DIR/env/OPENSHIFT_ZABBIX_PASSWORD
+
 echo "$version" > "$OPENSHIFT_ZABBIX_DIR/env/OPENSHIFT_ZABBIX_VERSION"
 echo "$OPENSHIFT_ZABBIX_DIR/configuration/etc/php.ini" > "$OPENSHIFT_ZABBIX_DIR/env/PHPRC"
 
@@ -36,4 +45,11 @@ ExternalScripts=$OPENSHIFT_ZABBIX_DIR/share/zabbix/externalscripts/
 ListenPort=$OPENSHIFT_ZABBIX_SERVER_PORT
 ListenIP=$OPENSHIFT_ZABBIX_IP
 EOF
+
+client_result ""
+client_result "Zabbix server configured.  Please make note of these credentials:"
+client_result ""
+client_result "       Admin User: $username"
+client_result "   Admin Password: $password"
+client_result ""
 
