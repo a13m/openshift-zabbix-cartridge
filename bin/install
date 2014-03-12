@@ -32,7 +32,8 @@ pear config-create "$OPENSHIFT_ZABBIX_DIR"/phplib/pear/ "$OPENSHIFT_HOMEDIR"/.pe
 pear -c "$OPENSHIFT_HOMEDIR"/.pearrc config-set php_ini "$OPENSHIFT_ZABBIX_DIR"/configuration/etc/php.ini
 pear -c "$OPENSHIFT_HOMEDIR"/.pearrc config-set auto_discover 1
 
-pear -c "$OPENSHIFT_HOMEDIR"/.pearrc config-get bin_dir > "$OPENSHIFT_ZABBIX_DIR/env/OPENSHIFT_ZABBIX_PATH_ELEMENT"
+PEAR_PATH=$( pear -c "$OPENSHIFT_HOMEDIR"/.pearrc config-get bin_dir )
+echo -n $OPENSHIFT_ZABBIX_DIR/usr/bin:$PEAR_PATH > "$OPENSHIFT_ZABBIX_DIR/env/OPENSHIFT_ZABBIX_PATH_ELEMENT"
 
 # XXX - This is the wrong place to set DB options
 if [ ! -d $OPENSHIFT_ZABBIX_DIR/etc/ ]; then
