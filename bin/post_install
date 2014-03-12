@@ -50,4 +50,6 @@ echo "update ${OPENSHIFT_APP_NAME}.users set passwd=md5('$OPENSHIFT_ZABBIX_PASSW
 touch $OPENSHIFT_ZABBIX_DIR/etc/.configured
 $OPENSHIFT_ZABBIX_DIR/bin/control start
 
+oo-exec-ruby gem install zabbixapi
+
 $OPENSHIFT_ZABBIX_DIR/usr/bin/import-template.py $OPENSHIFT_ZABBIX_DIR/versions/shared/configuration/etc/templates/zbx_gear_templates.xml
