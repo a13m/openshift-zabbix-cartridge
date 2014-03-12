@@ -22,4 +22,5 @@ popd
 popd
 rm -rf $BUILDROOT
 
-
+mv usr/bin/zabbix-import-template.py usr/bin/zabbix-import-template
+mv usr/bin/zabbix-add-host.rb usr/bin/zabbix-add-host

@@ -52,4 +52,4 @@ $OPENSHIFT_ZABBIX_DIR/bin/control start
 
 oo-exec-ruby gem install zabbixapi
 
-$OPENSHIFT_ZABBIX_DIR/usr/bin/import-template.py $OPENSHIFT_ZABBIX_DIR/versions/shared/configuration/etc/templates/zbx_gear_templates.xml
+$OPENSHIFT_ZABBIX_DIR/usr/bin/import-template $OPENSHIFT_ZABBIX_DIR/versions/shared/configuration/etc/templates/zbx_gear_templates.xml
