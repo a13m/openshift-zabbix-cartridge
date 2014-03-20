@@ -4,16 +4,16 @@
     <date>2014-03-12T14:23:25Z</date>
     <groups>
         <group>
-            <name>gears</name>
+            <name>OpenShift Gears</name>
         </group>
     </groups>
     <templates>
         <template>
-            <template>Template OpenShift gear</template>
-            <name>Template OpenShift gear</name>
+            <template>Template OpenShift Gear</template>
+            <name>Template OpenShift Gear</name>
             <groups>
                 <group>
-                    <name>gears</name>
+                    <name>OpenShift Gears</name>
                 </group>
             </groups>
             <applications>
@@ -1398,11 +1398,11 @@
             <screens/>
         </template>
         <template>
-            <template>Template OpenShift node</template>
-            <name>Template OpenShift node</name>
+            <template>Template OpenShift Node</template>
+            <name>Template OpenShift Node</name>
             <groups>
                 <group>
-                    <name>gears</name>
+                    <name>OpenShift Gears</name>
                 </group>
             </groups>
             <applications>
@@ -1835,7 +1835,7 @@
                     <calc_fnc>2</calc_fnc>
                     <type>0</type>
                     <item>
-                        <host>Template OpenShift gear</host>
+                        <host>Template OpenShift Gear</host>
                         <key>quota.home.blocks_limit</key>
                     </item>
                 </graph_item>
@@ -1847,7 +1847,7 @@
                     <calc_fnc>2</calc_fnc>
                     <type>0</type>
                     <item>
-                        <host>Template OpenShift gear</host>
+                        <host>Template OpenShift Gear</host>
                         <key>quota.home.blocks_used</key>
                     </item>
                 </graph_item>
@@ -1859,7 +1859,7 @@
                     <calc_fnc>2</calc_fnc>
                     <type>0</type>
                     <item>
-                        <host>Template OpenShift gear</host>
+                        <host>Template OpenShift Gear</host>
                         <key>quota.home.inodes_limit</key>
                     </item>
                 </graph_item>
@@ -1871,7 +1871,7 @@
                     <calc_fnc>2</calc_fnc>
                     <type>0</type>
                     <item>
-                        <host>Template OpenShift gear</host>
+                        <host>Template OpenShift Gear</host>
                         <key>quota.home.inodes_used</key>
                     </item>
                 </graph_item>
