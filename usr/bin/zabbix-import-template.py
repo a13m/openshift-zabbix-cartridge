@@ -89,7 +89,9 @@ class ZabbixAPI(object):
   def printResult(self, var):
     data = json.dumps(var)
     request = urllib2.Request(self.url, data, {"Content-Type" : "application/json"})
-    response = urllib2.urlopen(request)
+    proxy_handler = urllib2.ProxyHandler({})
+    opener = urllib2.build_opener(proxy_handler)
+    response = opener.open(request)
     return json.load(response)
 
 if __name__ == "__main__":
