@@ -1392,7 +1392,7 @@
             <macros/>
             <templates>
                 <template>
-                    <name>Template OpenShift node</name>
+                    <name>Template OpenShift Node</name>
                 </template>
             </templates>
             <screens/>

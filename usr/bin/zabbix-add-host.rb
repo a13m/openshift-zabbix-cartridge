@@ -20,7 +20,7 @@ zbx.hosts.create(
       :useip => 0
     }
   ],
-  :groups => [ :groupid => zbx.hostgroups.get_id(:name => "gears") ],
-  :templates => [ :templateid => zbx.templates.get_id(:host => "Template OpenShift gear") ]
+  :groups => [ :groupid => zbx.hostgroups.get_id(:name => "OpenShift Gears") ],
+  :templates => [ :templateid => zbx.templates.get_id(:host => "Template OpenShift Gear") ]
 )
 
